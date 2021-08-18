@@ -53,7 +53,10 @@ var myQuestions = [
 ];
 
 //timer vars
-var timeLeft = document.querySelector(".timer");
+var timerEl = document.querySelector(".timer");
+var timeLeft = myQuestions.length * 20;
+var timerCountdown;
+// myQuestions.length * 20
 
 //vars for elements on page
 var startBtn = document.querySelector("#btn-start");
@@ -65,8 +68,7 @@ var optionsDivEl =document.querySelector(".choices");
 
 //other vars
 var selectedQuestion = 0;
-var currentQuestion = myQuestions[selectedQuestion];
-
+var score;
 
 //start quiz
 var quizStart = function(){
@@ -76,14 +78,23 @@ var quizStart = function(){
     //display questions
     questionScreen.removeAttribute("class");
 
+    timerEl.textContent=timeLeft;
+
+    timerCountdown = setInterval(timerFunc, 1000);
+
     getQuestion();
 }
 
 //gets question from myQuestions array
 var getQuestion =function(){
+    var currentQuestion= myQuestions[selectedQuestion];
     //clear previous questions
     questionTitle.innerText= "";
     optionsDivEl.innerHTML="";
+
+    if(!currentQuestion){
+        endQuiz();
+    }
 
     questionTitle.innerText = currentQuestion.question;
 
@@ -102,24 +113,34 @@ var getQuestion =function(){
     });
     //increase to next question
     selectedQuestion++;
+
 }
 
 //determines if correct answer was clicked or not
 var choiceSelected = function(event){
+    var currentQuestion= myQuestions[selectedQuestion-1];
     //gets target element
     var targetEl = event.target;
     if(targetEl.matches(".option")){
         console.log(targetEl);
-        if(targetEl.value !== currentQuestion.answer ){
+        if(targetEl.value !== currentQuestion.answer){
             console.log("wrong");
+            timeLeft-=20
+            getQuestion();
         } else{
             console.log("correct!")
+            getQuestion();
         }
     }
+
 }
 
 //end quiz
 var endQuiz = function(){
+    clearInterval(timerCountdown);
+
+
+    console.log("end of game")
     //hide questions
     questionScreen.setAttribute("class", "hide");
 
@@ -130,8 +151,14 @@ var endQuiz = function(){
 
 //timer
 var timerFunc =function(){
+    timeLeft--;
+    timerEl.textContent=timeLeft
 
-}
+    if(timeLeft===0){
+        endQuiz();
+
+    }
+};
 
 //save hiscores
 var saveScore = function(){
