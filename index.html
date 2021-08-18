@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Wars Quiz</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+  
+  <header class="header">
+    <div class="hiscores">HiScores</div>
+    <div class="timer">75</div>
+  </header>
+  
+  <main class="main" id="main">
+
+    <!--start screen-->
+    <div id="start-screen">
+      <h1 class="start-title">Star Wars Quiz!</h1>
+      <p class="quiz-description">You will be asked multiple questions about Star Wars you have a time limit to answer all the questions and your score is determined by how much time you have left. If you get a question wrong 10 seconds will be deducted from your time left. </p>
+      <button id="btn-start">Start Quiz</button>
+    </div>
+
+    <!--Questions-->
+    <div id="questions" class="hide">
+      <h1 class="question-title"></h1>
+        <div class="choices"></div>
+    </div>
+
+    <!--end screen-->
+    <div id="end-screen" class="hide">
+      <h1 class="end-title">Quiz Over!</h1>
+      <p class="final-score">score here</p>
+      <form id="hiscore-form">
+        <div class="intials-input">
+          <input type="text"  name="user-initials" placeholder="Enter Your Initials">
+        </div class="form-btn">
+          <button type="submit" id="btn-submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>
