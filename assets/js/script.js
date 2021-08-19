@@ -199,6 +199,7 @@ var saveScore = function(event){
     //saves to local storage
     localStorage.setItem("hiscore", JSON.stringify(hiscore));
     scoreForm.reset();
+    window.location.replace("./hiscores.html");
 }
 
 //event listeners
