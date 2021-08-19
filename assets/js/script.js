@@ -65,10 +65,12 @@ var questionScreen =document.querySelector("#questions");
 var endScreen =document.querySelector("#end-screen");
 var questionTitle =document.querySelector(".question-title");
 var optionsDivEl =document.querySelector(".choices");
+var scoreDisplay =document.querySelector(".final-score");
+var scoreForm =document.querySelector("#hiscore-form");
 
 //other vars
 var selectedQuestion = 0;
-var score;
+var score = 0;
 
 //start quiz
 var quizStart = function(){
@@ -94,9 +96,12 @@ var getQuestion =function(){
 
     if(!currentQuestion){
         endQuiz();
+        return;
     }
 
     questionTitle.innerText = currentQuestion.question;
+
+    
 
     //variable for choices
     var questionOptions = currentQuestion.choices;
@@ -111,6 +116,7 @@ var getQuestion =function(){
         //adds to the div
         optionsDivEl.appendChild(optionButton);
     });
+
     //increase to next question
     selectedQuestion++;
 
@@ -119,6 +125,7 @@ var getQuestion =function(){
 //determines if correct answer was clicked or not
 var choiceSelected = function(event){
     var currentQuestion= myQuestions[selectedQuestion-1];
+
     //gets target element
     var targetEl = event.target;
     if(targetEl.matches(".option")){
@@ -126,9 +133,10 @@ var choiceSelected = function(event){
         if(targetEl.value !== currentQuestion.answer){
             console.log("wrong");
             timeLeft-=20
-            getQuestion();
+            getQuestion(); 
         } else{
-            console.log("correct!")
+            console.log("correct!");
+            score +=10;
             getQuestion();
         }
     }
@@ -137,8 +145,11 @@ var choiceSelected = function(event){
 
 //end quiz
 var endQuiz = function(){
+    //ends timer and sets time left as score
     clearInterval(timerCountdown);
-
+    timerEl.textContent=timeLeft;
+    score += timeLeft;
+    console.log(score);
 
     console.log("end of game")
     //hide questions
@@ -147,6 +158,7 @@ var endQuiz = function(){
     //display end screen
     endScreen.removeAttribute("class");
 
+    scoreDisplay.textContent="Your score is: "+score+"!";
 }
 
 //timer
@@ -160,11 +172,36 @@ var timerFunc =function(){
     }
 };
 
-//save hiscores
-var saveScore = function(){
+//save hiscores to local storage
+var saveScore = function(event){
+    //stops from refreshing
+    event.preventDefault();
 
+    //collects form data
+    var userInitials = document.querySelector("input[name='user-initials']").value;
+    //makes sure user inputs accurate data less than 3 digits
+    if(!userInitials || userInitials.length>3){
+        alert("Please enter initials 3 or less characters");
+        return;
+    }
+
+    //sets up hiscore as an array or whatever it was before
+    var hiscore = JSON.parse(localStorage.getItem("hiscore")) || [];
+
+    //creates a new object to store in the array
+    var newHiscore = {
+        player: userInitials,
+        score: score
+    };
+
+    //adds new score to the hiscores array
+    hiscore.push(newHiscore);
+    //saves to local storage
+    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    scoreForm.reset();
 }
 
 //event listeners
 startBtn.addEventListener("click", quizStart);
 questionScreen.addEventListener("click", choiceSelected);
+scoreForm.addEventListener("submit", saveScore);
