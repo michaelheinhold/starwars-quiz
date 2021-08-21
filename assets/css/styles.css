@@ -19,7 +19,6 @@ a, a:visited {
 }
 
 .main {
-    text-align: left;
     margin: 0 auto;
     width: 50%;
 }
@@ -86,8 +85,22 @@ ol {
 li {
     width: 150px;
     font-size: 1.5rem;
+    padding: 5px;
 }
 
 li:nth-child(odd){
     background-color: #b3c6f3;
 }
+
+.feedback{
+    font-size: 1.5rem;
+}
+
+.right{
+    color: rgb(39, 219, 39);
+}
+
+.wrong{
+    color: red;
+}
+

@@ -132,10 +132,37 @@ var choiceSelected = function(event){
         console.log(targetEl);
         if(targetEl.value !== currentQuestion.answer){
             console.log("wrong");
+            //feedback
+            var wrongAnswerEl = document.createElement("div");
+            var wrongAnswerText = document.createElement("p");
+            wrongAnswerText.innerText="Wrong!";
+            wrongAnswerText.setAttribute("class", "feedback wrong");
+            wrongAnswerEl.appendChild(wrongAnswerText);
+            questionScreen.appendChild(wrongAnswerEl);
+            if(selectedQuestion==5){
+                endScreen.appendChild(wrongAnswerEl);
+            };
+            setTimeout(function(){
+                wrongAnswerEl.setAttribute("Class", "hide");
+            },1000);
+
             timeLeft-=20
             getQuestion(); 
         } else{
             console.log("correct!");
+            //feedback
+            var rightAnswerEl = document.createElement("div");
+            var rightAnswerText = document.createElement("p");
+            rightAnswerText.innerText="Correct!";
+            rightAnswerText.setAttribute("class", "feedback right");
+            rightAnswerEl.appendChild(rightAnswerText);
+            questionScreen.appendChild(rightAnswerEl);
+            if(selectedQuestion==5){
+                endScreen.appendChild(rightAnswerEl);
+            };
+            setTimeout(function(){
+                rightAnswerEl.setAttribute("class", "hide");
+            },1000);
             score +=10;
             getQuestion();
         }
