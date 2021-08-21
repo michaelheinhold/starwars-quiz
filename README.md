@@ -5,3 +5,4 @@ want to test your star wars knowledge? click [here](https://michaelheinhold.gith
 The quiz was created using vanilla JavaScript
 
 ## Screenshot of the website:
+![Screenshot (5)](./assets/images/Screenshot (5))
